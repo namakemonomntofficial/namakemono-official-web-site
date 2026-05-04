@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home — 怠けモノ Official site</title>
+  <meta name="description" content="VTuber / クリエイター。3D・ロゴ・映像編集・オリジナルコンテンツ制作。">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    :root { --accent: var(--c-green); --accent-dim: var(--c-green-dim); }
+
+    /* ヒーロー */
+    .hero {
+      padding: 80px 0 64px;
+      border-bottom: 0.5px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -60px; right: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, hsl(120,50%,20%) 0%, transparent 70%);
+      pointer-events: none;
+      opacity: 0.25;
+    }
+    .hero-eyebrow {
+      font-size: 10px;
+      font-family: var(--font);
+      color: var(--c-green);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .hero-title {
+      font-family: var(--font);
+      font-size: clamp(36px, 7vw, 64px);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .hero-title .accent { color: var(--c-green); }
+    .hero-desc {
+      font-size: 13px;
+      color: var(--text2);
+      max-width: 420px;
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+    .hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+    .hero-tagline { font-size: 12px; color: var(--text2); letter-spacing: 0.1em; margin: -10px 0 22px; font-weight: 500; }
+
+    /* コンテンツナビ */
+    .content-nav { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .cn-card {
+      background: var(--bg2);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s;
+      text-decoration: none;
+      display: block;
+    }
+    .cn-card:hover { transform: translateY(-2px); }
+    .cn-bar { height: 2px; }
+    .cn-body { padding: 14px 14px 12px; }
+    .cn-icon { font-size: 18px; margin-bottom: 8px; }
+    .cn-name { font-size: 13px; font-weight: 500; color: #ddd; margin-bottom: 3px; font-family: var(--font); }
+    .cn-sub { font-size: 10px; color: var(--text3); }
+
+    /* 最新情報 */
+    .news-list { display: flex; flex-direction: column; gap: 6px; }
+    .news-item {
+      background: var(--bg2);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .news-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .news-title { font-size: 12px; color: #ccc; flex: 1; }
+    .news-date { font-size: 10px; color: var(--text3); }
+
+    @media (max-width: 640px) {
+      .content-nav { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+    <nav class="nav">
+    <div class="nav-logo">Namake mono Official site<span>.</span></div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="profile.html">Profile</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="blog.html">Blog</a>
+      <a href="tips.html">Tips</a>
+      <a href="original.html">Original</a>
+      <a href="shop.html">Shop</a>
+      <a href="commission.html">Commission</a>
+      <a href="fanart.html">Fan Art</a>
+      <a href="links.html">Links</a>
+    </div>
+    <button class="nav-menu-btn" aria-label="メニュー"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="nav-border"></div>
+  <div class="nav-mobile">
+    <a href="index.html">Home</a>
+    <a href="profile.html">Profile</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="blog.html">Blog</a>
+    <a href="tips.html">Tips</a>
+    <a href="original.html">Original</a>
+    <a href="shop.html">Shop</a>
+    <a href="commission.html">Commission</a>
+    <a href="fanart.html">Fan Art</a>
+    <a href="links.html">Links</a>
+  </div>
+
+  <div class="page-wrap">
+    <div class="page-title-wrap">
+      <section class="hero">
+        <div class="container">
+          <div class="hero-eyebrow">VTuber / Creative</div>
+          <h1 class="hero-title">
+            怠けモノ<br>
+            <span class="accent">Official site</span>
+          </h1>
+          <p class="hero-tagline">3D · Logo · Video · VTuber</p>
+          <p class="hero-desc">
+            映像・グラフィック・3DCGと幅広いクリエイティブ制作を手がけています。<br>
+            VTuberとしても活動中。制作ノウハウはブログでも発信しています。
+          </p>
+          <div class="hero-btns">
+            <a href="portfolio.html" class="btn btn-primary">作品を見る</a>
+            <a href="commission.html" class="btn btn-outline">制作依頼</a>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="page-content-wrap">
+
+    <section class="section">
+      <div class="container">
+        <div class="section-label">Contents</div>
+        <div class="content-nav">
+          <a href="portfolio.html" class="cn-card fade-in" style="--hover-c: var(--c-orange)">
+            <div class="cn-bar" style="background: var(--c-orange)"></div>
+            <div class="cn-body">
+              <div class="cn-icon">◈</div>
+              <div class="cn-name">Portfolio</div>
+              <div class="cn-sub">3D / Logo / Video</div>
+            </div>
+          </a>
+          <a href="blog.html" class="cn-card fade-in">
+            <div class="cn-bar" style="background: var(--c-teal)"></div>
+            <div class="cn-body">
+              <div class="cn-icon">✏</div>
+              <div class="cn-name">Blog</div>
+              <div class="cn-sub">活動記録・考察</div>
+            </div>
+          </a>
+          <a href="tips.html" class="cn-card fade-in">
+            <div class="cn-bar" style="background: var(--c-lime)"></div>
+            <div class="cn-body">
+              <div class="cn-icon">☆</div>
+              <div class="cn-name">Tips</div>
+              <div class="cn-sub">創作のコツ・情報</div>
+            </div>
+          </a>
+          <a href="original.html" class="cn-card fade-in">
+            <div class="cn-bar" style="background: var(--c-red)"></div>
+            <div class="cn-body">
+              <div class="cn-icon">◆</div>
+              <div class="cn-name">Original</div>
+              <div class="cn-sub">人工言語 etc.</div>
+            </div>
+          </a>
+          <a href="shop.html" class="cn-card fade-in">
+            <div class="cn-bar" style="background: var(--c-pink)"></div>
+            <div class="cn-body">
+              <div class="cn-icon">◎</div>
+              <div class="cn-name">Shop</div>
+              <div class="cn-sub">販売物・グッズ</div>
+            </div>
+          </a>
+          <a href="commission.html" class="cn-card fade-in">
+            <div class="cn-bar" style="background: var(--c-violet)"></div>
+            <div class="cn-body">
+              <div class="cn-icon">▲</div>
+              <div class="cn-name">Commission</div>
+              <div class="cn-sub">製作依頼・料金</div>
+            </div>
+          </a>
+          <a href="fanart.html" class="cn-card fade-in">
+            <div class="cn-bar" style="background: var(--c-blue)"></div>
+            <div class="cn-body">
+              <div class="cn-icon">♡</div>
+              <div class="cn-name">Fan Art</div>
+              <div class="cn-sub">ファンアート</div>
+            </div>
+          </a>
+          <a href="links.html" class="cn-card fade-in">
+            <div class="cn-bar" style="background: var(--border2)"></div>
+            <div class="cn-body">
+              <div class="cn-icon">→</div>
+              <div class="cn-name">Links</div>
+              <div class="cn-sub">SNS・リンク集</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-label">News</div>
+        <div class="news-list">
+          <div class="news-item fade-in">
+            <div class="news-dot" style="background: var(--c-orange)"></div>
+            <div class="news-title">新作3DCGを公開しました</div>
+            <div class="news-date">2025.04.10</div>
+          </div>
+          <div class="news-item fade-in">
+            <div class="news-dot" style="background: var(--c-violet)"></div>
+            <div class="news-title">制作依頼の料金表を更新しました</div>
+            <div class="news-date">2025.03.28</div>
+          </div>
+          <div class="news-item fade-in">
+            <div class="news-dot" style="background: var(--c-teal)"></div>
+            <div class="news-title">ブログ新記事：Blenderで始めるプロダクト3D入門</div>
+            <div class="news-date">2025.03.15</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </div><!-- /page-content-wrap -->
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-inner">
+          <div class="footer-copy">© 2025 怠けモノ</div>
+          <div class="footer-sns">
+            <a href="#">X (Twitter)</a>
+            <a href="#">YouTube</a>
+            <a href="#">Instagram</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

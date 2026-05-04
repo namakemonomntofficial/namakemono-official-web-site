@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio — 怠けモノ Official site</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .tab-bar {
+      display: flex; gap: 4px; padding: 20px 0 0;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .tab-btn {
+      padding: 8px 16px; font-size: 12px; font-weight: 700;
+      font-family: var(--font); background: none; border: none;
+      color: var(--text2); cursor: pointer;
+      border-bottom: 2px solid transparent; margin-bottom: -0.5px;
+      transition: color 0.2s; letter-spacing: 0.04em;
+    }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab-content { display: none; padding: 28px 0; }
+    .tab-content.active { display: block; }
+    .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .work-card {
+      background: var(--bg2); border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg); overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s; cursor: pointer;
+    }
+    .work-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .work-thumb {
+      height: 140px; background: var(--accent-dim);
+      display: flex; align-items: center; justify-content: center; font-size: 36px;
+    }
+    .work-info { padding: 12px 14px; }
+    .work-title { font-size: 13px; font-weight: 700; color: #ddd; margin-bottom: 4px; }
+    .work-meta { font-size: 10px; color: var(--text3); font-weight: 500; }
+    .empty-note { text-align: center; padding: 48px 0; color: var(--text3); font-size: 12px; }
+    @media (max-width: 640px) { .work-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-logo">Namake mono Official site<span>.</span></div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="profile.html">Profile</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="blog.html">Blog</a>
+      <a href="tips.html">Tips</a>
+      <a href="original.html">Original</a>
+      <a href="shop.html">Shop</a>
+      <a href="commission.html">Commission</a>
+      <a href="fanart.html">Fan Art</a>
+      <a href="links.html">Links</a>
+    </div>
+    <button class="nav-menu-btn" aria-label="メニュー"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="nav-border"></div>
+  <div class="nav-mobile">
+    <a href="index.html">Home</a>
+    <a href="profile.html">Profile</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="blog.html">Blog</a>
+    <a href="tips.html">Tips</a>
+    <a href="original.html">Original</a>
+    <a href="shop.html">Shop</a>
+    <a href="commission.html">Commission</a>
+    <a href="fanart.html">Fan Art</a>
+    <a href="links.html">Links</a>
+  </div>
+
+  <div class="page-wrap">
+    <div class="page-title-wrap">
+      <div class="page-header">
+        <div class="container">
+          <div class="page-tag">Portfolio</div>
+          <h1 class="page-title">制作実績</h1>
+          <p class="page-sub">3DCG・ロゴ・映像編集の作品です。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content-wrap">
+      <div class="container">
+        <div class="tab-bar">
+          <button class="tab-btn active">All</button>
+          <button class="tab-btn">3D</button>
+          <button class="tab-btn">Logo</button>
+          <button class="tab-btn">Video</button>
+        </div>
+        <div class="tab-content active" id="tab-all">
+          <div class="work-grid">
+            <div class="work-card fade-in"><div class="work-thumb" style="background:hsl(165,40%,10%)">🌐</div><div class="work-info"><div class="work-title">作品タイトルをここに</div><div class="work-meta">3D · 2025</div></div></div>
+            <div class="work-card fade-in"><div class="work-thumb" style="background:hsl(210,40%,10%)">◎</div><div class="work-info"><div class="work-title">作品タイトルをここに</div><div class="work-meta">Logo · 2025</div></div></div>
+            <div class="work-card fade-in"><div class="work-thumb" style="background:hsl(255,35%,12%)">▶</div><div class="work-info"><div class="work-title">作品タイトルをここに</div><div class="work-meta">Video · 2025</div></div></div>
+            <div class="work-card fade-in"><div class="work-thumb" style="background:hsl(30,40%,10%)">◈</div><div class="work-info"><div class="work-title">作品タイトルをここに</div><div class="work-meta">3D · 2024</div></div></div>
+            <div class="work-card fade-in"><div class="work-thumb" style="background:hsl(120,35%,10%)">✦</div><div class="work-info"><div class="work-title">作品タイトルをここに</div><div class="work-meta">Logo · 2024</div></div></div>
+            <div class="work-card fade-in"><div class="work-thumb" style="background:hsl(345,38%,11%)">★</div><div class="work-info"><div class="work-title">作品タイトルをここに</div><div class="work-meta">Video · 2024</div></div></div>
+          </div>
+          <p class="empty-note">※ 画像は後から差し替えてください</p>
+        </div>
+        <div class="tab-content" id="tab-3d">
+          <div class="work-grid">
+            <div class="work-card fade-in"><div class="work-thumb" style="background:hsl(165,40%,10%)">🌐</div><div class="work-info"><div class="work-title">3D作品タイトル</div><div class="work-meta">Blender · 2025</div></div></div>
+            <div class="work-card fade-in"><div class="work-thumb" style="background:hsl(30,40%,10%)">◈</div><div class="work-info"><div class="work-title">3D作品タイトル</div><div class="work-meta">Cinema 4D · 2024</div></div></div>
+          </div>
+        </div>
+        <div class="tab-content" id="tab-logo">
+          <div class="work-grid">
+            <div class="work-card fade-in"><div class="work-thumb" style="background:hsl(210,40%,10%)">◎</div><div class="work-info"><div class="work-title">ロゴ作品タイトル</div><div class="work-meta">Illustrator · 2025</div></div></div>
+            <div class="work-card fade-in"><div class="work-thumb" style="background:hsl(120,35%,10%)">✦</div><div class="work-info"><div class="work-title">ロゴ作品タイトル</div><div class="work-meta">Illustrator · 2024</div></div></div>
+          </div>
+        </div>
+        <div class="tab-content" id="tab-video">
+          <div class="work-grid">
+            <div class="work-card fade-in"><div class="work-thumb" style="background:hsl(255,35%,12%)">▶</div><div class="work-info"><div class="work-title">映像作品タイトル</div><div class="work-meta">Premiere Pro · 2025</div></div></div>
+            <div class="work-card fade-in"><div class="work-thumb" style="background:hsl(345,38%,11%)">★</div><div class="work-info"><div class="work-title">映像作品タイトル</div><div class="work-meta">After Effects · 2024</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <div class="container">
+          <div class="footer-inner">
+            <div class="footer-copy">© 2025 怠けモノ</div>
+            <div class="footer-sns">
+              <a href="#">X (Twitter)</a><a href="#">YouTube</a><a href="#">Instagram</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div><!-- /page-content-wrap -->
+  </div>
+  <script src="js/main.js"></script>
+
+
+  <script>
+    function switchTab(e, id) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      e.target.classList.add('active');
+      document.getElementById('tab-' + id).classList.add('active');
+    }
+  </script>
+</body>
+</html>
