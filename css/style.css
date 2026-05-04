@@ -1,0 +1,345 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+2:wght@400;500;700;800;900&display=swap');
+
+/* ══════════════════════════════════════════
+   カラーシステム
+   ══════════════════════════════════════════ */
+:root {
+  --bg:        #080809;
+  --bg2:       #0e0e10;
+  --bg3:       #141417;
+  --border:    #1e1e24;
+  --border2:   #2a2a33;
+  --text:      #d4d3cc;
+  --text2:     #666;
+  --text3:     #333;
+
+  --c-green:      hsl(120,62%,40%);
+  --c-teal:       hsl(165,58%,38%);
+  --c-blue:       hsl(210,65%,52%);
+  --c-violet:     hsl(255,58%,58%);
+  --c-red:        hsl(300,50%,48%);
+  --c-pink:       hsl(345,62%,52%);
+  --c-orange:     hsl(30,72%,52%);
+  --c-lime:       hsl(75,58%,44%);
+
+  --c-green-dim:  hsl(120,50%,10%);
+  --c-teal-dim:   hsl(165,50%,9%);
+  --c-blue-dim:   hsl(210,55%,11%);
+  --c-violet-dim: hsl(255,45%,12%);
+  --c-red-dim:    hsl(300,42%,10%);
+  --c-pink-dim:   hsl(345,48%,11%);
+  --c-orange-dim: hsl(30,58%,10%);
+  --c-lime-dim:   hsl(75,48%,9%);
+
+  /* JS が rAF で書き換えるライブ色相 */
+  --live-h: 120;
+  --live-s: 58%;
+  --live-l: 42%;
+
+  --accent:     hsl(var(--live-h), var(--live-s), var(--live-l));
+  --accent-dim: hsl(var(--live-h), 48%, 10%);
+
+  --font:      'M PLUS 2', sans-serif;
+  --nav-h:     56px;
+  --radius:    8px;
+  --radius-lg: 12px;
+  --content-w: 960px;  /* 全ページ共通コンテナ幅 */
+}
+
+/* ══════════════════════════════════════════
+   リセット
+   ══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.7;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+ul { list-style: none; }
+
+/* ══════════════════════════════════════════
+   ナビゲーション
+   ★ ナビ全体: アニメーション一切なし
+     - will-change / animation / transition は使わない
+     - アクティブリンクの color 変化のみ許可
+   ══════════════════════════════════════════ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  background: rgba(8,8,9,0.92);
+  backdrop-filter: blur(14px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  z-index: 500;
+  /* transform / opacity / animation: なし */
+}
+
+/* ナビ下ボーダー（色相追従・JS が --accent を通じてリアルタイム更新） */
+.nav-border {
+  position: fixed;
+  top: var(--nav-h);
+  left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  z-index: 499;
+  /* transition なし：rAF で毎フレーム色が変わるので CSS transition は不要かつ競合する */
+}
+
+.nav-logo {
+  font-size: 13px;
+  font-weight: 900;
+  color: #fff;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  /* リンク色変化以外の動きなし */
+}
+.nav-logo span { color: var(--accent); }
+
+.nav-links { display: flex; gap: 20px; }
+.nav-links a {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text2);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  /* hover 時の color 変化のみ */
+  transition: color 0.15s;
+}
+.nav-links a:hover,
+.nav-links a.active { color: var(--accent); }
+
+.nav-menu-btn {
+  display: none;
+  background: none; border: none;
+  cursor: pointer; padding: 4px;
+  flex-direction: column; gap: 5px;
+}
+.nav-menu-btn span {
+  display: block;
+  width: 22px; height: 1.5px;
+  background: var(--text2);
+}
+
+.nav-mobile {
+  display: none;
+  position: fixed;
+  top: calc(var(--nav-h) + 2px);
+  left: 0; right: 0;
+  background: var(--bg2);
+  border-bottom: 0.5px solid var(--border);
+  padding: 10px 20px;
+  flex-direction: column; gap: 0;
+  z-index: 498;
+}
+.nav-mobile.open { display: flex; }
+.nav-mobile a {
+  padding: 9px 0;
+  font-size: 13px; font-weight: 500;
+  color: var(--text2);
+  border-bottom: 0.5px solid var(--border);
+  transition: color 0.15s;
+}
+.nav-mobile a:last-child { border-bottom: none; }
+.nav-mobile a:hover,
+.nav-mobile a.active { color: var(--accent); }
+
+/* ══════════════════════════════════════════
+   ページラッパー
+   ══════════════════════════════════════════ */
+.page-wrap {
+  padding-top: calc(var(--nav-h) + 2px);
+  min-height: 100vh;
+}
+
+/* ══════════════════════════════════════════
+   ページ遷移アニメーション
+   ── ナビ・ボーダーは .page-wrap の外なので影響なし
+   ══════════════════════════════════════════ */
+
+/* タイトル部: 左スライドアウト / 右スライドイン */
+.page-title-wrap { will-change: transform, opacity; }
+
+.page-title-wrap.title-exit {
+  animation: titleOut 0.28s cubic-bezier(0.4,0,1,1) forwards;
+  pointer-events: none;
+}
+.page-title-wrap.title-enter {
+  animation: titleIn 0.32s cubic-bezier(0,0,0.2,1) forwards;
+}
+
+@keyframes titleOut {
+  from { opacity:1; transform:translateX(0); }
+  to   { opacity:0; transform:translateX(-52px); }
+}
+@keyframes titleIn {
+  from { opacity:0; transform:translateX(52px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+
+/* コンテンツ部: フェードのみ */
+.page-content-wrap { will-change: opacity; }
+
+.page-content-wrap.content-exit {
+  animation: fadeOut 0.25s ease forwards;
+  pointer-events: none;
+}
+.page-content-wrap.content-enter {
+  animation: fadeIn 0.32s ease forwards;
+}
+
+@keyframes fadeOut { from{opacity:1} to{opacity:0} }
+@keyframes fadeIn  { from{opacity:0} to{opacity:1} }
+
+/* ══════════════════════════════════════════
+   共通コンテナ（全ページ統一）
+   ══════════════════════════════════════════ */
+.container {
+  max-width: var(--content-w);
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ══════════════════════════════════════════
+   ページヘッダー
+   ══════════════════════════════════════════ */
+.page-header {
+  padding: 52px 0 36px;
+  border-bottom: 0.5px solid var(--border);
+  position: relative;
+}
+.page-header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+}
+.page-tag {
+  font-size: 10px; font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.2em; text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.page-title {
+  font-family: var(--font);
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 900;
+  color: #fff; line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.page-title em { color: var(--accent); font-style: normal; }
+.page-sub {
+  margin-top: 10px;
+  font-size: 13px; color: var(--text2);
+  max-width: 520px; line-height: 1.75;
+}
+
+/* ══════════════════════════════════════════
+   セクション
+   ══════════════════════════════════════════ */
+.section {
+  padding: 44px 0;
+  border-bottom: 0.5px solid var(--border);
+}
+.section:last-child { border-bottom: none; }
+
+.section-label {
+  font-size: 10px; font-weight: 700;
+  color: var(--text3);
+  letter-spacing: 0.16em; text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+/* ══════════════════════════════════════════
+   汎用コンポーネント
+   ══════════════════════════════════════════ */
+.card {
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--accent); }
+.card-bar { height: 2px; background: var(--accent); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 20px; border-radius: var(--radius);
+  font-size: 12px; font-family: var(--font); font-weight: 700;
+  cursor: pointer; border: none; letter-spacing: 0.04em;
+  transition: all 0.2s;
+}
+.btn-primary { background: var(--accent); color: #000; }
+.btn-primary:hover { filter: brightness(1.15); }
+.btn-outline {
+  background: transparent; color: var(--text2);
+  border: 0.5px solid var(--border2);
+}
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+.tag {
+  display: inline-block;
+  font-size: 10px; font-weight: 700;
+  padding: 2px 8px; border-radius: 100px;
+  background: var(--accent-dim); color: var(--accent);
+  letter-spacing: 0.04em;
+}
+
+.grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
+
+/* ── スクロールフェードイン ── */
+.fade-in {
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ══════════════════════════════════════════
+   フッター
+   ══════════════════════════════════════════ */
+.footer { border-top: 0.5px solid var(--border); padding: 22px 0; }
+.footer-inner {
+  display: flex; align-items: center;
+  justify-content: space-between; flex-wrap: wrap; gap: 10px;
+}
+.footer-copy { font-size: 11px; color: var(--text3); font-weight: 500; }
+.footer-sns { display: flex; gap: 14px; }
+.footer-sns a {
+  font-size: 11px; color: var(--text3); font-weight: 500;
+  transition: color 0.2s;
+}
+.footer-sns a:hover { color: var(--accent); }
+
+/* ── スクロールバー ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+/* ══════════════════════════════════════════
+   レスポンシブ
+   ══════════════════════════════════════════ */
+@media (max-width: 700px) {
+  .nav-links { display: none; }
+  .nav-menu-btn { display: flex; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+  .nav { padding: 0 16px; }
+  .container { padding: 0 16px; }
+}
+@media (max-width: 420px) {
+  .grid-3, .grid-4 { grid-template-columns: 1fr; }
+}
