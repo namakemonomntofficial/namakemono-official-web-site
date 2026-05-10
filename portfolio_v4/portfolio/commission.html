@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commission — 怠けモノ Official site</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    :root { --accent: var(--c-violet); --accent-dim: var(--c-violet-dim); }
+
+    .status-bar {
+      background: var(--c-violet-dim);
+      border: 0.5px solid hsl(255,40%,28%);
+      border-radius: var(--radius);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: hsl(120,60%,45%); box-shadow: 0 0 6px hsl(120,60%,45%); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    .status-text { font-size: 12px; color: hsl(255,50%,72%); }
+
+    .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 32px; }
+    .price-card {
+      background: var(--bg2);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+    }
+    .price-card.featured { border-color: hsl(255,45%,38%); }
+    .price-card.featured::before {
+      content: 'おすすめ';
+      position: absolute;
+      top: 10px; right: 10px;
+      font-size: 9px;
+      background: var(--c-violet);
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 100px;
+    }
+    .price-header { padding: 16px 16px 12px; border-bottom: 0.5px solid var(--border); }
+    .price-type { font-size: 10px; color: var(--c-violet); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+    .price-name { font-size: 14px; font-weight: 500; color: #ddd; margin-bottom: 6px; font-family: var(--font); }
+    .price-amount { font-family: var(--font); font-size: 20px; font-weight: 800; color: var(--c-violet); }
+    .price-amount span { font-size: 11px; color: var(--text3); font-weight: 400; }
+    .price-body { padding: 12px 16px; }
+    .price-item { font-size: 11px; color: var(--text2); padding: 4px 0; display: flex; gap: 8px; }
+    .price-item::before { content: '✓'; color: var(--c-violet); flex-shrink: 0; }
+
+    .flow-list { display: flex; flex-direction: column; gap: 0; }
+    .flow-item {
+      display: flex;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 0.5px solid var(--border);
+      position: relative;
+    }
+    .flow-item:last-child { border-bottom: none; }
+    .flow-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--c-violet-dim);
+      border: 0.5px solid hsl(255,40%,30%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px;
+      font-family: var(--font);
+      color: var(--c-violet);
+      flex-shrink: 0;
+    }
+    .flow-content { flex: 1; }
+    .flow-title { font-size: 13px; font-weight: 500; color: #ddd; margin-bottom: 3px; }
+    .flow-desc { font-size: 11px; color: var(--text2); line-height: 1.6; }
+
+    .notes-box {
+      background: var(--bg2);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+    }
+    .note-item { font-size: 12px; color: var(--text2); padding: 5px 0; display: flex; gap: 10px; line-height: 1.6; }
+    .note-item::before { content: '·'; color: var(--c-violet); font-size: 16px; flex-shrink: 0; margin-top: -2px; }
+
+    .contact-btn-wrap { text-align: center; padding: 32px 0; }
+
+    @media (max-width: 640px) {
+      .price-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+    <nav class="nav">
+    <div class="nav-logo">Namake mono Official site<span>.</span></div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="profile.html">Profile</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="blog.html">Blog</a>
+      <a href="tips.html">Tips</a>
+      <a href="original.html">Original</a>
+      <a href="shop.html">Shop</a>
+      <a href="commission.html">Commission</a>
+      <a href="fanart.html">Fan Art</a>
+      <a href="links.html">Links</a>
+    </div>
+    <button class="nav-menu-btn" aria-label="メニュー"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="nav-border"></div>
+  <div class="nav-mobile">
+    <a href="index.html">Home</a>
+    <a href="profile.html">Profile</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="blog.html">Blog</a>
+    <a href="tips.html">Tips</a>
+    <a href="original.html">Original</a>
+    <a href="shop.html">Shop</a>
+    <a href="commission.html">Commission</a>
+    <a href="fanart.html">Fan Art</a>
+    <a href="links.html">Links</a>
+  </div>
+
+  <div class="page-wrap">
+    <div class="page-title-wrap">
+      <div class="page-header">
+        <div class="container">
+          <div class="page-tag">Commission</div>
+          <h1 class="page-title">製作依頼</h1>
+          <p class="page-sub">3D・ロゴ・映像編集の制作依頼を承っています。</p>
+        </div>
+      </div>
+    </div>
+    <div class="page-content-wrap">
+      <section class="section">
+        <div class="container">
+          <div class="price-card featured fade-in">
+            <div class="price-header">
+              <div class="price-type">Logo</div>
+              <div class="price-name">ロゴデザイン</div>
+              <div class="price-amount">¥ 00,000 <span>〜</span></div>
+            </div>
+            <div class="price-body">
+              <div class="price-item">ロゴマーク＋ロゴタイプ</div>
+              <div class="price-item">カラー・モノクロ納品</div>
+              <div class="price-item">修正3回まで含む</div>
+            </div>
+          </div>
+          <div class="price-card fade-in">
+            <div class="price-header">
+              <div class="price-type">Video</div>
+              <div class="price-name">映像編集</div>
+              <div class="price-amount">¥ 00,000 <span>〜</span></div>
+            </div>
+            <div class="price-body">
+              <div class="price-item">OP・ED・MV等</div>
+              <div class="price-item">モーショングラフィックス</div>
+              <div class="price-item">修正2回まで含む</div>
+            </div>
+          </div>
+
+          <div class="section-label">依頼の流れ</div>
+            <div class="flow-list">
+              <div class="flow-item fade-in">
+                <div class="flow-num">1</div>
+                <div class="flow-content">
+                  <div class="flow-title">お問い合わせ</div>
+                  <div class="flow-desc">下のボタンからフォームまたはSNSのDMにてご連絡ください。</div>
+                </div>
+              </div>
+              <div class="flow-item fade-in">
+                <div class="flow-num">2</div>
+                <div class="flow-content">
+                  <div class="flow-title">ヒアリング・お見積もり</div>
+                  <div class="flow-desc">ご要望をお聞きし、納期・料金のお見積もりをご提示します。</div>
+                </div>
+              </div>
+              <div class="flow-item fade-in">
+                <div class="flow-num">3</div>
+                <div class="flow-content">
+                  <div class="flow-title">ご入金・制作開始</div>
+                  <div class="flow-desc">ご確認いただけましたらお支払い後、制作を開始します。</div>
+                </div>
+              </div>
+              <div class="flow-item fade-in">
+                <div class="flow-num">4</div>
+                <div class="flow-content">
+                  <div class="flow-title">確認・修正</div>
+                  <div class="flow-desc">途中確認を挟みながら進めます。プランに応じた修正回数内で対応します。</div>
+                </div>
+              </div>
+              <div class="flow-item fade-in">
+                <div class="flow-num">5</div>
+                <div class="flow-content">
+                  <div class="flow-title">納品</div>
+                  <div class="flow-desc">最終データを納品して完了です。</div>
+                </div>
+              </div>
+            </div>
+          <div class="section-label">注意事項</div>
+            <div class="notes-box fade-in">
+              <div class="note-item">著作権・商用利用については別途ご相談ください。</div>
+              <div class="note-item">キャンセルは制作開始前のみ承ります。</div>
+              <div class="note-item">ジャンルによっては対応できない場合があります。</div>
+              <div class="note-item">ここに注意事項を追加してください。</div>
+            </div>
+            <div class="contact-btn-wrap">
+              <a href="links.html" class="btn btn-primary" style="font-size:13px; padding: 12px 28px;">依頼・お問い合わせはこちら</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      </div><!-- /page-content-wrap -->
+
+      <footer class="footer">
+        <div class="container">
+          <div class="footer-inner">
+            <div class="footer-copy">© 2025 怠けモノ</div>
+            <div class="footer-sns"><a href="#">X (Twitter)</a><a href="#">YouTube</a><a href="#">Instagram</a></div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — 怠けモノ Official site</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .blog-grid { display: flex; flex-direction: column; gap: 10px; }
+    .blog-card {
+      background: var(--bg2); border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg); padding: 20px 22px;
+      display: flex; align-items: flex-start; gap: 16px;
+      transition: border-color 0.2s; cursor: pointer; text-decoration: none;
+    }
+    .blog-card:hover { border-color: var(--accent); }
+    .blog-card-left { flex: 1; }
+    .blog-tags { display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
+    .blog-title { font-size: 14px; font-weight: 700; color: #ddd; margin-bottom: 6px; line-height: 1.5; }
+    .blog-excerpt { font-size: 12px; color: var(--text2); line-height: 1.7; }
+    .blog-date { font-size: 10px; color: var(--text3); margin-top: 10px; font-weight: 500; }
+    .blog-card-right {
+      width: 80px; height: 60px; background: var(--accent-dim);
+      border-radius: var(--radius); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 24px;
+    }
+    .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
+    .filter-btn {
+      padding: 5px 12px; font-size: 11px; font-weight: 700;
+      background: var(--bg2); border: 0.5px solid var(--border);
+      border-radius: 100px; color: var(--text2); cursor: pointer;
+      transition: all 0.2s; font-family: var(--font);
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--accent-dim); border-color: var(--accent); color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-logo">Namake mono Official site<span>.</span></div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="profile.html">Profile</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="blog.html">Blog</a>
+      <a href="tips.html">Tips</a>
+      <a href="original.html">Original</a>
+      <a href="shop.html">Shop</a>
+      <a href="commission.html">Commission</a>
+      <a href="fanart.html">Fan Art</a>
+      <a href="links.html">Links</a>
+    </div>
+    <button class="nav-menu-btn" aria-label="メニュー"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="nav-border"></div>
+  <div class="nav-mobile">
+    <a href="index.html">Home</a>
+    <a href="profile.html">Profile</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="blog.html">Blog</a>
+    <a href="tips.html">Tips</a>
+    <a href="original.html">Original</a>
+    <a href="shop.html">Shop</a>
+    <a href="commission.html">Commission</a>
+    <a href="fanart.html">Fan Art</a>
+    <a href="links.html">Links</a>
+  </div>
+
+  <div class="page-wrap">
+    <div class="page-title-wrap">
+      <div class="page-header">
+        <div class="container">
+          <div class="page-tag">Blog</div>
+          <h1 class="page-title">ブログ</h1>
+          <p class="page-sub">活動記録・日常・考察などを書いています。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content-wrap">
+      <section class="section">
+        <div class="container">
+          <div class="filter-bar">
+            <button class="filter-btn active">All</button>
+            <button class="filter-btn">活動記録</button>
+            <button class="filter-btn">3D</button>
+            <button class="filter-btn">映像</button>
+            <button class="filter-btn">VTuber</button>
+            <button class="filter-btn">雑記</button>
+          </div>
+          <div class="blog-grid">
+            <a href="#" class="blog-card fade-in">
+              <div class="blog-card-left">
+                <div class="blog-tags"><span class="tag">3D</span></div>
+                <div class="blog-title">Blenderで始めるプロダクト3D入門</div>
+                <div class="blog-excerpt">プロダクト系3DCGをBlenderで制作する際の基本的なワークフローについて解説します。</div>
+                <div class="blog-date">2025.04.10</div>
+              </div>
+              <div class="blog-card-right">🌐</div>
+            </a>
+            <a href="#" class="blog-card fade-in">
+              <div class="blog-card-left">
+                <div class="blog-tags"><span class="tag">VTuber</span></div>
+                <div class="blog-title">配信を始めて気づいたこと</div>
+                <div class="blog-excerpt">VTuberとして活動を始めてから感じたことや、準備しておけばよかったことをまとめました。</div>
+                <div class="blog-date">2025.03.28</div>
+              </div>
+              <div class="blog-card-right">✦</div>
+            </a>
+            <a href="#" class="blog-card fade-in">
+              <div class="blog-card-left">
+                <div class="blog-tags"><span class="tag">映像</span></div>
+                <div class="blog-title">After Effects モーショングラフィックス制作メモ</div>
+                <div class="blog-excerpt">よく使うエクスプレッションや制作の効率化につながるTipsをまとめました。</div>
+                <div class="blog-date">2025.03.15</div>
+              </div>
+              <div class="blog-card-right">▶</div>
+            </a>
+            <a href="#" class="blog-card fade-in">
+              <div class="blog-card-left">
+                <div class="blog-tags"><span class="tag">雑記</span></div>
+                <div class="blog-title">記事タイトルをここに書いてください</div>
+                <div class="blog-excerpt">記事の概要・リード文をここに書きます。2〜3行程度で内容を紹介します。</div>
+                <div class="blog-date">2025.02.20</div>
+              </div>
+              <div class="blog-card-right">◎</div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="container">
+          <div class="footer-inner">
+            <div class="footer-copy">© 2025 怠けモノ</div>
+            <div class="footer-sns">
+              <a href="#">X (Twitter)</a><a href="#">YouTube</a><a href="#">Instagram</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div><!-- /page-content-wrap -->
+  </div>
+  <script src="js/main.js"></script>
+</body>
+</html>
