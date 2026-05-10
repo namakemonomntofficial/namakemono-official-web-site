@@ -219,13 +219,13 @@ ul { list-style: none; }
   border-bottom: 0.5px solid var(--border);
   position: relative;
 }
-.page-header::before {
+/*.page-header::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 2px;
   background: var(--accent);
-}
+}*/
 .page-tag {
   font-size: 10px; font-weight: 700;
   color: var(--accent);

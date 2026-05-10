@@ -18,7 +18,7 @@
       margin-bottom: 24px;
     }
 
-    .shop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .shop-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .shop-card {
       background: var(--bg2);
       border: 0.5px solid var(--border);
@@ -124,45 +124,48 @@
         </div>
       </div>
     </div>
-          <div class="shop-card fade-in">
-            <div class="shop-thumb">◎</div>
-            <div class="shop-info">
-              <div class="shop-name">商品タイトルをここに</div>
-              <div class="shop-desc">商品の説明をここに書きます。</div>
-              <div class="shop-bottom">
-                <span class="shop-price">¥ 000</span>
-                <a href="#" class="shop-btn">購入する</a>
+    <div class="page-content-wrap">
+      <section class="section">
+        <div class="container">
+          <div class="shop-grid">
+            <div class="shop-card fade-in">
+              <div class="shop-thumb">◎</div>
+              <div class="shop-info">
+                <div class="shop-name">商品タイトルをここに</div>
+                <div class="shop-desc">商品の説明をここに書きます。</div>
+                <div class="shop-bottom">
+                  <span class="shop-price">¥ 000</span>
+                  <a href="#" class="shop-btn">購入する</a>
+                </div>
+              </div>
+            </div>
+            <div class="shop-card fade-in">
+              <div class="shop-thumb">
+                ✦
+                <span class="shop-badge" style="background: hsl(75,50%,35%)">FREE</span>
+              </div>
+              <div class="shop-info">
+                <div class="shop-name">無料素材タイトル</div>
+                <div class="shop-desc">無料配布中の素材です。ご自由にお使いください。</div>
+                <div class="shop-bottom">
+                  <span class="shop-price" style="color: var(--c-lime)">無料</span>
+                  <a href="#" class="shop-btn" style="color: var(--c-lime); border-color: hsl(75,40%,25%); background: var(--c-lime-dim)">ダウンロード</a>
+                </div>
               </div>
             </div>
           </div>
-          <div class="shop-card fade-in">
-            <div class="shop-thumb">
-              ✦
-              <span class="shop-badge" style="background: hsl(75,50%,35%)">FREE</span>
-            </div>
-            <div class="shop-info">
-              <div class="shop-name">無料素材タイトル</div>
-              <div class="shop-desc">無料配布中の素材です。ご自由にお使いください。</div>
-              <div class="shop-bottom">
-                <span class="shop-price" style="color: var(--c-lime)">無料</span>
-                <a href="#" class="shop-btn" style="color: var(--c-lime); border-color: hsl(75,40%,25%); background: var(--c-lime-dim)">ダウンロード</a>
-              </div>
-            </div>
+        </div><!-- /page-content-wrap -->
+      </section>
+
+      <footer class="footer">
+        <div class="container">
+          <div class="footer-inner">
+            <div class="footer-copy">© 2025 怠けモノ</div>
+            <div class="footer-sns"><a href="#">X (Twitter)</a><a href="#">YouTube</a><a href="#">Instagram</a></div>
           </div>
         </div>
-      </div>
-    </section>
-
-    </div><!-- /page-content-wrap -->
-
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-inner">
-          <div class="footer-copy">© 2025 怠けモノ</div>
-          <div class="footer-sns"><a href="#">X (Twitter)</a><a href="#">YouTube</a><a href="#">Instagram</a></div>
-        </div>
-      </div>
-    </footer>
+      </footer>
+    </div>
   </div>
   <script src="js/main.js"></script>
 </body>
