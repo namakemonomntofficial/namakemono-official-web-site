@@ -225,18 +225,6 @@ ul { list-style: none; }
   to   { opacity:1; transform:translateY(0); }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .page-title-wrap.title-exit-right,
-  .page-title-wrap.title-exit-left,
-  .page-title-wrap.title-enter-right,
-  .page-title-wrap.title-enter-left,
-  .page-content-wrap.content-exit,
-  .page-content-wrap.content-enter {
-    animation-duration: 0.01ms;
-    animation-delay: 0s;
-  }
-}
-
 /* ══════════════════════════════════════════
    共通コンテナ（全ページ統一）
    ══════════════════════════════════════════ */
@@ -340,7 +328,7 @@ ul { list-style: none; }
 
 /* ── スクロールフェードイン ── */
 .fade-in {
-  opacity: 0; transform: translateY(14px);
+  opacity: 0; transform: translateY(-14px);
   transition: opacity 0.45s ease, transform 0.45s ease;
 }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
