@@ -1,13 +1,11 @@
 /**
- * 怠けモノ Official site — main.js  v4
+ * 怠けモノ Official site — main.js  v5
  *
  * 設計:
  *  - ナビ・ボーダーライン: 色相追従のみ。スライド/フェード一切なし。
- *  - .page-title-wrap   : 左スライドアウト → 右スライドイン
- *  - .page-content-wrap : フェードアウト   → フェードイン
- *  - 色相補間: 45°/300ms ペース、最短経路。
- *    ページ到着時は「前ページの色相」から補間開始するため
- *    sessionStorage で出発色相を引き継ぐ。
+ *  - ナビの位置に合わせてタイトルの退場・入場方向を切り替える。
+ *  - コンテンツは上から下へ移動しながら入場する。
+ *  - 色相は最短経路で補間し、彩度・明度も同時に補間する。
  */
 
 // ─────────────────────────────────────────
@@ -26,31 +24,56 @@ const PAGE_HUE = {
   'fanart.html':     210,
   'links.html':     null,
 };
-const NEUTRAL_H  = 215;   // links.html 用のグレー寄り色相
-const SAT_LIVE   = '58%';
-const LIT_LIVE   = '42%';
-const MS_PER_DEG = 300 / 45;   // 6.67ms/deg → 45°=300ms
+const PAGE_ORDER = [
+  'index.html',
+  'profile.html',
+  'portfolio.html',
+  'blog.html',
+  'tips.html',
+  'original.html',
+  'shop.html',
+  'commission.html',
+  'fanart.html',
+  'links.html',
+];
+const NEUTRAL_H = 215;
+const DEFAULT_S = 58;
+const DEFAULT_L = 42;
+const NEUTRAL_S = 10;
+const NEUTRAL_L = 48;
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ─────────────────────────────────────────
 // 現在ページ
 // ─────────────────────────────────────────
 function currentPage() {
-  return location.pathname.split('/').pop() || '';
+  return location.pathname.split('/').pop() || 'index.html';
 }
-function getTargetHue(page) {
+function getPageColor(page) {
   const h = PAGE_HUE[page];
-  return (h == null) ? NEUTRAL_H : h;
+  const neutral = h == null;
+  return {
+    h: neutral ? NEUTRAL_H : h,
+    s: neutral ? NEUTRAL_S : DEFAULT_S,
+    l: neutral ? NEUTRAL_L : DEFAULT_L,
+  };
+}
+
+function transitionDirection(fromPage, toPage) {
+  const fromIndex = PAGE_ORDER.indexOf(fromPage || 'index.html');
+  const toIndex = PAGE_ORDER.indexOf(toPage || 'index.html');
+  if (fromIndex < 0 || toIndex < 0 || fromIndex === toIndex) return 'right';
+  return toIndex > fromIndex ? 'right' : 'left';
 }
 
 // ─────────────────────────────────────────
 // CSS カスタムプロパティ書き換え
 // ─────────────────────────────────────────
-function applyHue(h) {
+function applyColor(color) {
   const r = document.documentElement;
-  const isNeutral = (PAGE_HUE[currentPage()] == null);
-  r.style.setProperty('--live-h', Math.round(((h % 360) + 360) % 360));
-  r.style.setProperty('--live-s', isNeutral ? '10%' : SAT_LIVE);
-  r.style.setProperty('--live-l', isNeutral ? '48%' : LIT_LIVE);
+  r.style.setProperty('--live-h', (((color.h % 360) + 360) % 360).toFixed(2));
+  r.style.setProperty('--live-s', `${color.s.toFixed(2)}%`);
+  r.style.setProperty('--live-l', `${color.l.toFixed(2)}%`);
 }
 
 // ─────────────────────────────────────────
@@ -66,26 +89,34 @@ function shortestDelta(from, to) {
 // 色相アニメーター
 // ─────────────────────────────────────────
 let rafId   = null;
-let liveHue = 120;
+let liveColor = getPageColor(currentPage());
 
-function animateHue(fromH, toH, onDone) {
+function animateColor(fromColor, toColor, onDone) {
   if (rafId) cancelAnimationFrame(rafId);
 
-  const delta = shortestDelta(fromH, toH);
-  const dur   = Math.max(Math.abs(delta) * MS_PER_DEG, 60);
+  const hueDelta = shortestDelta(fromColor.h, toColor.h);
+  const saturationDelta = toColor.s - fromColor.s;
+  const lightnessDelta = toColor.l - fromColor.l;
+  const dur = REDUCED_MOTION
+    ? 0
+    : Math.min(480, Math.max(280, Math.abs(hueDelta) * 3.2));
   const start = performance.now();
 
   function step(now) {
-    const t    = Math.min((now - start) / dur, 1);
-    // ease-in-out cubic
-    const ease = t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2;
-    liveHue = fromH + delta * ease;
-    applyHue(liveHue);
+    const t = dur === 0 ? 1 : Math.min((now - start) / dur, 1);
+    const ease = 1 - Math.pow(1 - t, 3);
+    liveColor = {
+      h: fromColor.h + hueDelta * ease,
+      s: fromColor.s + saturationDelta * ease,
+      l: fromColor.l + lightnessDelta * ease,
+    };
+    applyColor(liveColor);
     if (t < 1) {
       rafId = requestAnimationFrame(step);
     } else {
-      liveHue = fromH + delta;
-      applyHue(liveHue);
+      liveColor = { ...toColor };
+      applyColor(liveColor);
+      rafId = null;
       if (onDone) onDone();
     }
   }
@@ -97,24 +128,34 @@ function animateHue(fromH, toH, onDone) {
 // ─────────────────────────────────────────
 let navigating = false;
 
-function navigate(href) {
+function navigate(href, clickedLink) {
   if (navigating) return;
   const destFile = href.split('/').pop().split('?')[0] || '';
   if (destFile === currentPage()) return;
 
   navigating = true;
-  const destHue = getTargetHue(destFile);
+  const destPage = destFile || 'index.html';
+  const destColor = getPageColor(destPage);
+  const direction = transitionDirection(currentPage(), destPage);
 
-  // 出発時の色相を次ページへ引き継ぐ
-  try { sessionStorage.setItem('fromHue', String(liveHue)); } catch(e){}
+  // 押したリンクへ active を先に移し、ボーダーと同じ色で追従させる。
+  if (clickedLink) {
+    document.querySelectorAll('.nav-links a, .nav-mobile a').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === href);
+    });
+  }
 
   const titleWrap = document.querySelector('.page-title-wrap');
   const contWrap  = document.querySelector('.page-content-wrap');
-  if (titleWrap) titleWrap.classList.add('title-exit');
+  if (titleWrap) titleWrap.classList.add(`title-exit-${direction}`);
   if (contWrap)  contWrap.classList.add('content-exit');
 
-  // 色相補間しながら遷移
-  animateHue(liveHue, destHue, () => {
+  // ページを開く前に色補間を完了し、到着先ではその色を維持する。
+  animateColor({ ...liveColor }, destColor, () => {
+    try {
+      sessionStorage.setItem('entryColor', JSON.stringify(destColor));
+      sessionStorage.setItem('pageDirection', direction);
+    } catch(e) {}
     window.location.href = href;
   });
 }
@@ -124,26 +165,23 @@ function navigate(href) {
 // ─────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   const page      = currentPage();
-  const targetHue = getTargetHue(page);
-
-  // 前ページから色相を引き継ぐ（あれば）
-  let fromHue = targetHue;
+  const targetColor = getPageColor(page);
+  let entryColor = targetColor;
+  let direction = 'right';
   try {
-    const stored = sessionStorage.getItem('fromHue');
-    if (stored !== null) {
-      fromHue = parseFloat(stored);
-      sessionStorage.removeItem('fromHue');
+    const storedColor = sessionStorage.getItem('entryColor');
+    const storedDirection = sessionStorage.getItem('pageDirection');
+    if (storedColor) {
+      const parsed = JSON.parse(storedColor);
+      if ([parsed.h, parsed.s, parsed.l].every(Number.isFinite)) entryColor = parsed;
     }
-  } catch(e){}
+    if (storedDirection === 'left' || storedDirection === 'right') direction = storedDirection;
+    sessionStorage.removeItem('entryColor');
+    sessionStorage.removeItem('pageDirection');
+  } catch(e) {}
 
-  // 即座に fromHue を適用（ちらつき防止）
-  liveHue = fromHue;
-  applyHue(fromHue);
-
-  // fromHue → targetHue へ補間（入場と同時進行）
-  if (Math.abs(shortestDelta(fromHue, targetHue)) > 1) {
-    animateHue(fromHue, targetHue, null);
-  }
+  liveColor = entryColor;
+  applyColor(entryColor);
 
   // ── 入場アニメーション ──
   const titleWrap = document.querySelector('.page-title-wrap');
@@ -152,9 +190,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // わずかに遅延させてブラウザの初回レンダリングを先に済ませる
   requestAnimationFrame(() => {
     if (titleWrap) {
-      titleWrap.classList.add('title-enter');
+      const enterClass = `title-enter-${direction}`;
+      titleWrap.classList.add(enterClass);
       titleWrap.addEventListener('animationend',
-        () => titleWrap.classList.remove('title-enter'), { once: true });
+        () => titleWrap.classList.remove(enterClass), { once: true });
     }
     if (contWrap) {
       contWrap.classList.add('content-enter');
@@ -168,9 +207,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const a = e.target.closest('a[href]');
     if (!a) return;
     const href = a.getAttribute('href');
-    if (!href || /^(https?:|mailto:|#)/.test(href)) return;
+    if (!href || /^(https?:|mailto:|#)/.test(href) || a.target === '_blank' || a.hasAttribute('download')) return;
+    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     e.preventDefault();
-    navigate(href);
+    navigate(href, a);
   });
 
   // ── モバイルメニュー ──
@@ -183,8 +223,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── アクティブリンク ──
   document.querySelectorAll('.nav-links a, .nav-mobile a').forEach(a => {
     const href = a.getAttribute('href');
-    if (href === page || (page === '' && href === 'index.html'))
+    if (href === page)
       a.classList.add('active');
+    if (href === page) a.setAttribute('aria-current', 'page');
   });
 
   // ── スクロールフェードイン ──

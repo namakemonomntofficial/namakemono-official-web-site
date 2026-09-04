@@ -118,6 +118,7 @@ ul { list-style: none; }
 }
 .nav-links a:hover,
 .nav-links a.active { color: var(--accent); }
+.nav-links a.active { transition: none; }
 
 .nav-menu-btn {
   display: none;
@@ -153,6 +154,7 @@ ul { list-style: none; }
 .nav-mobile a:last-child { border-bottom: none; }
 .nav-mobile a:hover,
 .nav-mobile a.active { color: var(--accent); }
+.nav-mobile a.active { transition: none; }
 
 /* ══════════════════════════════════════════
    ページラッパー
@@ -167,39 +169,73 @@ ul { list-style: none; }
    ── ナビ・ボーダーは .page-wrap の外なので影響なし
    ══════════════════════════════════════════ */
 
-/* タイトル部: 左スライドアウト / 右スライドイン */
+/* タイトル部: 選んだタブの位置に合わせて左右へ切り替える */
 .page-title-wrap { will-change: transform, opacity; }
 
-.page-title-wrap.title-exit {
-  animation: titleOut 0.28s cubic-bezier(0.4,0,1,1) forwards;
+.page-title-wrap.title-exit-right,
+.page-title-wrap.title-exit-left {
+  animation-duration: 0.32s;
+  animation-timing-function: cubic-bezier(0.4,0,0.2,1);
+  animation-fill-mode: forwards;
   pointer-events: none;
 }
-.page-title-wrap.title-enter {
-  animation: titleIn 0.32s cubic-bezier(0,0,0.2,1) forwards;
-}
+.page-title-wrap.title-exit-right { animation-name: titleOutLeft; }
+.page-title-wrap.title-exit-left  { animation-name: titleOutRight; }
 
-@keyframes titleOut {
-  from { opacity:1; transform:translateX(0); }
-  to   { opacity:0; transform:translateX(-52px); }
+.page-title-wrap.title-enter-right,
+.page-title-wrap.title-enter-left {
+  animation-duration: 0.42s;
+  animation-timing-function: cubic-bezier(0.16,1,0.3,1);
+  animation-fill-mode: both;
 }
-@keyframes titleIn {
-  from { opacity:0; transform:translateX(52px); }
+.page-title-wrap.title-enter-right { animation-name: titleInRight; }
+.page-title-wrap.title-enter-left  { animation-name: titleInLeft; }
+
+@keyframes titleOutLeft {
+  from { opacity:1; transform:translateX(0); }
+  to   { opacity:0; transform:translateX(-44px); }
+}
+@keyframes titleOutRight {
+  from { opacity:1; transform:translateX(0); }
+  to   { opacity:0; transform:translateX(44px); }
+}
+@keyframes titleInRight {
+  from { opacity:0; transform:translateX(44px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+@keyframes titleInLeft {
+  from { opacity:0; transform:translateX(-44px); }
   to   { opacity:1; transform:translateX(0); }
 }
 
-/* コンテンツ部: フェードのみ */
-.page-content-wrap { will-change: opacity; }
+/* コンテンツ部: 上から下へ移動しながら入場 */
+.page-content-wrap { will-change: transform, opacity; }
 
 .page-content-wrap.content-exit {
   animation: fadeOut 0.25s ease forwards;
   pointer-events: none;
 }
 .page-content-wrap.content-enter {
-  animation: fadeIn 0.32s ease forwards;
+  animation: contentDownIn 0.52s 0.08s cubic-bezier(0.16,1,0.3,1) both;
 }
 
 @keyframes fadeOut { from{opacity:1} to{opacity:0} }
-@keyframes fadeIn  { from{opacity:0} to{opacity:1} }
+@keyframes contentDownIn {
+  from { opacity:0; transform:translateY(-24px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-title-wrap.title-exit-right,
+  .page-title-wrap.title-exit-left,
+  .page-title-wrap.title-enter-right,
+  .page-title-wrap.title-enter-left,
+  .page-content-wrap.content-exit,
+  .page-content-wrap.content-enter {
+    animation-duration: 0.01ms;
+    animation-delay: 0s;
+  }
+}
 
 /* ══════════════════════════════════════════
    共通コンテナ（全ページ統一）
