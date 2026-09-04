@@ -41,7 +41,6 @@ const DEFAULT_S = 58;
 const DEFAULT_L = 42;
 const NEUTRAL_S = 10;
 const NEUTRAL_L = 48;
-const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ─────────────────────────────────────────
 // 現在ページ
@@ -97,9 +96,7 @@ function animateColor(fromColor, toColor, onDone) {
   const hueDelta = shortestDelta(fromColor.h, toColor.h);
   const saturationDelta = toColor.s - fromColor.s;
   const lightnessDelta = toColor.l - fromColor.l;
-  const dur = REDUCED_MOTION
-    ? 0
-    : Math.min(480, Math.max(280, Math.abs(hueDelta) * 3.2));
+  const dur = Math.min(480, Math.max(280, Math.abs(hueDelta) * 3.2));
   const start = performance.now();
 
   function step(now) {
