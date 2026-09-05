@@ -1,0 +1,25 @@
+.reading-modal [hidden] { display: none !important; }
+.reading-game { margin-top: 1rem; }
+.reading-game-card { border: 1px solid color-mix(in srgb, #c94fc9 35%, #fff); border-radius: 14px; background: #fffdfd; padding: 1.25rem; color: #251b25; }
+.reading-game-kicker { margin: 0 0 .35rem; color: #a13f9d; font-size: .72rem; font-weight: 800; letter-spacing: .12em; }
+.reading-game-card h3 { margin: 0 0 .6rem; font-size: 1.25rem; }
+.reading-game-card > p { line-height: 1.65; }
+.reading-game-primary, .reading-game-secondary { border-radius: 9px; padding: .65rem .9rem; font: inherit; font-weight: 700; cursor: pointer; }
+.reading-game-primary { border: 1px solid #8f328c; background: #9f419c; color: #fff; }
+.reading-game-secondary { border: 1px solid #d7c8d6; background: #fff; color: #5a4659; }
+.reading-game-progress, .reading-game-actions { display: flex; justify-content: space-between; align-items: center; gap: .75rem; }
+.reading-game-actions { justify-content: flex-end; margin-top: 1rem; }
+.reading-game-progress { color: #765b75; font-size: .85rem; }
+.reading-game-word { margin: .55rem 0; font-size: clamp(2rem, 9vw, 4rem); font-weight: 800; letter-spacing: .04em; text-align: center; }
+.reading-game-context { margin: .2rem 0 1rem; text-align: center; color: #745873; }
+.reading-game-label { display: grid; gap: .4rem; font-weight: 700; }
+.reading-game-label input, .reading-game-review-list input { width: 100%; box-sizing: border-box; border: 1px solid #cbb9ca; border-radius: 8px; padding: .7rem; font: inherit; }
+.reading-game-label input:focus, .reading-game-review-list input:focus { outline: 3px solid #edccec; border-color: #9f419c; }
+.reading-game-help { color: #765b75; font-size: .82rem; }
+.reading-game-help kbd { padding: .12rem .35rem; border: 1px solid #c9bbc9; border-radius: 4px; background: #fff; }
+.reading-game-review-list { display: grid; gap: .55rem; max-height: 42vh; overflow: auto; padding-right: .25rem; }
+.reading-game-review-list label { display: grid; grid-template-columns: minmax(6rem, 1fr) minmax(8rem, 1.2fr); align-items: center; gap: .7rem; padding: .55rem .65rem; border-radius: 8px; background: #faf5fa; }
+.reading-game-review-list label span { display: flex; justify-content: space-between; gap: .4rem; }
+.reading-game-review-list small { color: #765b75; white-space: nowrap; }
+.reading-game-none { color: #765b75; }
+@media (max-width: 520px) { .reading-game-review-list label { grid-template-columns: 1fr; gap: .35rem; } .reading-game-actions { flex-wrap: wrap; } }
